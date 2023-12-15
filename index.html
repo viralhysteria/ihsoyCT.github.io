@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-bs-theme="light">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FDHPKF5WPQ"></script>
+    <!-- <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FDHPKF5WPQ"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -11,7 +14,7 @@
       gtag("js", new Date());
 
       gtag("config", "G-FDHPKF5WPQ");
-    </script>
+    </script> -->
     <title>Reddit Archive</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,6 +36,7 @@
       href="/public/favicon-16x16.png"
     />
     <link rel="manifest" href="/public/site.webmanifest" />
+    <link rel="stylesheet" href="style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -49,83 +53,597 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <div id="highlight">
-    PullPush has now started indexing new submission/comments. Post made after April 2023 should now appear in searches.
-  </div>
-  <div class="error" id="error"></div>
-  <div class="left">
-    <a href="./index.html" id="back">Reset</a>
-    <a href="./about.html" id="back">Help/About/Contact</a>
-    <a href="./changelog.html" id="back">Changelog</a>
-    <div id="searchform">
-      <form id="search_form">
-        <div class="searchFlex">
-          <label for="mode">
-            <span class="label">Comments/Submissions</span>
-            <select id="mode" name="mode">
-              <option value="submissions">Submissions</option>
-              <option value="comments">Comments</option>
-            </select>
-          </label>
-          <label for="subreddit">
-            <span class="label">Subreddit </span>
-            <input type="text" name="subreddit" id="subreddit" />
-          </label>
-          <label for="sort_type">
-            <span class="label">Sort Type:</span>
-            <select name="sort_type" id="sort_type">
-              <option value="created_utc">Time</option>
-              <option value="score">Score</option>
-              <option value="num_comments">Comments</option>
-            </select>
-          </label>
-          <label for="sort">
-            <span class="label">Order</span>
-            <select name="sort" id="sort">
-              <option value="desc">desc</option>
-              <option value="asc">asc</option>
-            </select>
-          </label>
-          <div class="break"></div>
-          <label for="limit">
-            <span class="label"> Limit: </span>
-            <input type="number" min="1" max="1000" value="100" name="limit" id="limit" />
-          </label>
-          <label for="after">
-            <span class="label">After:</span>
-            <input type="datetime-local" name="after" id="after" />
-          </label>
-          <label for="before">
-            <span class="label">Before:</span>
-            <input type="datetime-local" name="before" id="before" />
-          </label>
-          <label for="author">
-            <span class="label">Author:</span>
-            <input type="text" name="author" id="author" />
-          </label>
-          <div class="break"></div>
-          <label for="score">
-            <span class="label">Score:</span>
-            <input type="text" name="score" id="score" />
-          </label>
-          <label for="num_comments">
-            <span class="label">Number of comments:</span>
-            <input type="text" name="num_comments" id="num_comments" />
-          </label>
-          <label for="q">
-            <span class="label">Search:</span>
-            <input type="text" name="q" id="q" />
-          </label>
-          <input type="submit" />
+  <body>
+    <div class="container-lg p-3 pb-2 h-100" style="max-width: 1200px">
+      <div id="pattern"></div>
+      <div
+        id="fabContainer"
+        class="container-lg px-4 d-flex flex-row justify-content-center align-items-center gap-2"
+      >
+        <div
+          class="fab rounded-circle shadow"
+          onclick="() => {
+            if((window.location.href)) {
+              
+            }
+            window.history.back()}"
+        >
+          <div
+            class="fab_content d-flex align-items-center justify-content-center h-100 w-100"
+          >
+            <i class="bi bi-caret-left-fill"></i>
+          </div>
         </div>
-      </form>
+        <div
+          class="fab rounded-circle shadow"
+          onclick="window.history.forward()"
+        >
+          <div
+            class="fab_content d-flex align-items-center justify-content-center h-100 w-100"
+          >
+            <i class="bi bi-caret-right-fill"></i>
+          </div>
+        </div>
+        <div
+          class="fab rounded-circle shadow"
+          onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        >
+          <div
+            class="fab_content d-flex align-items-center justify-content-center h-100 w-100"
+          >
+            <i class="bi bi-caret-up-fill"></i>
+          </div>
+        </div>
+        <div class="fab rounded-circle shadow ms-auto" onclick="">
+          <div
+            class="fab_content d-flex align-items-center justify-content-center h-100 w-100"
+          >
+            <input type="checkbox" id="theme_toggle" class="d-none" />
+            <label for="theme_toggle">
+              <i id="theme_icon" style="cursor: pointer"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="accordian accordian-flush shadow-sm">
+        <div class="fs-6 accordian-item alert border-info bg-info-subtle mb-3">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#flush-notice"
+              aria-expanded="false"
+              aria-controls="flush-notice"
+            >
+              <span
+                ><i class="bi-info-circle me-2"></i>Important Notice (click to
+                see more)</span
+              >
+            </button>
+          </h2>
+          <div
+            id="flush-notice"
+            class="accordion-collapse collapse"
+            data-bs-parent="#accordionFlushExample"
+          >
+            <div class="accordion-body pt-2">
+              [API] PullPush has started indexing new submission/comments. Posts
+              made after April 2023 should now appear in searches.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="navbar-nav nav-underline px-2 mb-3 bg-body border rounded-2 shadow-sm"
+      >
+        <div class="d-flex flex-row">
+          <a
+            href=""
+            data-bs-toggle="modal"
+            data-bs-target="#about"
+            class="nav-link px-2 p-2 text-decoration-none"
+          >
+            <i class="bi-question-circle me-2"></i>About</a
+          >
+          <div
+            class="modal fade"
+            id="about"
+            tabindex="-1"
+            aria-labelledby="aboutLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="aboutLabel">
+                    What is this site?
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body bg-body-tertiary">
+                  <p>
+                    This site leverages the
+                    <a href="https://pullpush.io">PullPush API</a> as a means to
+                    browse quarantined and/or banned subreddits and user
+                    profiles.<br />
+                    While this is the intended purpose, it can also be used to
+                    browse content that is still currently available.<br /><br />
+                    Please understand that the content this service delivers is
+                    solely reliant on the data returned by PullPush; there is no
+                    guarantee that all restricted subreddits will have data
+                    available.<br /><br />
+                    The search form, utilizing regular expressions (regex),
+                    allows for various special characters (e.g. comparative
+                    operators) to enable more advanced and flexible searching
+                    capabilities.<br /><br />
+                    <strong><u>Subreddit</u></strong> - Allows you to seperate
+                    multiple subreddits using commas. To exclude a subreddit
+                    from your search you can use <strong>!</strong><br />
+                    Same applies to the
+                    <strong>Author</strong> field.<br /><br />
+                    <strong><u>Size</u></strong> - Defines how many results you
+                    want. By default it will look for 100 posts, which is also
+                    the maximum.<br /><br />
+                    <strong><u>Score/Comments</u></strong> - Allows for the use
+                    of comparative operators. (e.g.) Entering &gt;100 into Score
+                    will only find Submissions/Comments with more than 100
+                    Upvotes.<br /><br />
+                    PullPush does not store scores for many submissions and
+                    comments, so sorting by score will often not give you the
+                    results you want, sorting by comments might be
+                    preferable.<br />
+                    For really old threads, it is not possible to recreate the
+                    threads with all the comments.<br /><br />
+                    If you want to see post beyond the limit of 1000, use the
+                    pagination controls to manually navigate through the
+                    results.<br /><br />
+                    This server does not retain any personal data. If you want
+                    your data deleted, please reach out to
+                    <a href="https://removals.pullpush.io/">PullPush</a>.
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <span class="d-flex w-50 justify-content-evenly">
+                    <a href="https://github.com/viralhysteria">viralhysteria</a>
+                    <i class="bi-sign-intersection-y-fill"></i>
+                    /
+                    <a href="https://github.com/ihsoyCT/ctarchive">original</a>
+                    <!-- ihsoyct@protonmail.com -->
+                    <i class="bi-github"></i>
+                  </span>
+
+                  <button
+                    type="button"
+                    class="btn btn-secondary ms-auto"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a
+            href="./index.html"
+            id="reset"
+            class="nav-link px-2 p-2 text-decoration-none"
+          >
+            <i class="bi-arrow-clockwise me-2"></i>Reset</a
+          >
+          <a
+            class="nav-link px-2 p-2 text-decoration-none"
+            data-bs-toggle="offcanvas"
+            href="#sidebar"
+            role="button"
+            aria-controls="sidebar"
+          >
+            <i class="bi-search me-2"></i>Search
+          </a>
+          <a
+            href=""
+            data-bs-toggle="modal"
+            data-bs-target="#deadSubs"
+            class="nav-link ms-auto p-2 text-decoration-none"
+            ><i class="bi-dash-circle me-2"></i>Banned Subs</a
+          >
+          <div
+            class="modal fade"
+            id="deadSubs"
+            tabindex="-1"
+            aria-labelledby="deadSubsLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content p-1">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="deadSubsLabel">
+                    Banned/Quarantined Subreddits
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="container">
+                    <ul
+                      id="subredditsModal"
+                      class="mb-4 accordian accordion-flush ps-0"
+                    ></ul>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <span class="me-auto"
+                    ><a
+                      href="https://www.reddit.com/r/reclassified/comments/fg3608/updated_list_of_all_known_banned_subreddits/"
+                      style="color: var(--bs-body-color)"
+                      >Source<i class="bi bi-reddit ms-2"></i></a
+                  ></span>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a
+            href=""
+            data-bs-toggle="modal"
+            data-bs-target="#changelog"
+            class="nav-link p-2 text-decoration-none"
+            ><i class="bi-book me-2"></i>Changelog</a
+          >
+          <div
+            class="modal fade"
+            id="changelog"
+            tabindex="-1"
+            aria-labelledby="changelogLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="changelogLabel">
+                    Changelog
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="container">
+                    <ul class="list-group list-group-flush mb-4">
+                      <!-- border badge rounded-pill bg-body-tertiary text-body -->
+                      <span class="section"><h4>05/12/2023</h4></span>
+                      <li class="list-group-item">
+                        Implemented bootstrap classes for responsive design
+                      </li>
+                      <li class="list-group-item">
+                        Migrated /about + /changelog to modals on index page
+                      </li>
+                      <li class="list-group-item">
+                        Added offcanvas for search options
+                      </li>
+                      <li class="list-group-item">
+                        Added bootstrap icons to general layout
+                      </li>
+                      <li class="list-group-item">
+                        Added floating navigation ribbon
+                      </li>
+                      <li class="list-group-item">
+                        Added light/dark mode toggle
+                      </li>
+                      <li class="list-group-item">
+                        Added "Banned Subreddits" to header nav
+                      </li>
+                      <li class="list-group-item">
+                        Added accordian to comments
+                      </li>
+                      <li class="list-group-item">
+                        Slight improvements to error handling logic
+                      </li>
+                      <li class="list-group-item">
+                        Styling changes to status pop-ups
+                      </li>
+                      <li class="list-group-item">
+                        Moved permalink on submissions to bottom of page
+                      </li>
+                      <li class="list-group-item">
+                        Edited prior changelog messages to increase readability
+                      </li>
+                      <li
+                        class="list-group-item bg-warning-subtle border-warning-subtle"
+                      >
+                        Notice: There is currently an issue when fetching
+                        comments using the chat icon in post headers
+                      </li>
+                    </ul>
+                    <div
+                      class="d-flex align-items-center justify-content-between bg-body-secondary p-2 my-3 rounded-2 border shadow-sm"
+                    >
+                      <i class="bi-exclamation-octagon-fill text-danger"></i>
+                      <span class="fw-bold"
+                        >BEGIN FORKED CHANGES <i class="bi bi-arrow-up"></i
+                      ></span>
+                      <i class="bi-exclamation-octagon-fill text-danger"></i>
+                    </div>
+                    <ul class="list-group list-group-flush mb-4">
+                      <span class="section"
+                        ><h4 class="mb-2">01/07/2023</h4></span
+                      >
+                      <li
+                        class="list-group-item bg-info-subtle border-info-subtle"
+                      >
+                        Migrated to PullPush
+                      </li>
+                      <!-- <li class="list-group-item">
+                        Pushshift shut down, an alternative showed up, but
+                        doesn't work yet.
+                      </li>
+                      <li class="list-group-item">
+                        Only comments/submissions from /r/funny are loaded
+                      </li>
+                      <li class="list-group-item">
+                        Currently it is not possible to load the comments for a
+                        specific reddit thread
+                      </li> -->
+                    </ul>
+                    <ul class="list-group list-group-flush mb-4">
+                      <span class="section"><h4>16/01/2023</h4></span>
+                      <li class="list-group-item">
+                        <b>[Pushshift]</b> Version update (The new version does
+                        not currently support loading comments or submissions
+                        created before 03/11/2022.)
+                      </li>
+                      <li class="list-group-item">
+                        Added conditioning logic to load submission content
+                        seperately from comments
+                      </li>
+                      <li class="list-group-item">
+                        <u>Sorting:</u><br />
+                        Label: Sort → Order<br />
+                        Label: After → Since<br />
+                        Label: Before → Until<br />
+                        Added timecode support for date
+                      </li>
+                      <li class="list-group-item">
+                        Added a permalink to the submission page
+                      </li>
+                      <!-- <li class="list-group-item">
+                        Sorting by number of comments currently does not work.
+                      </li> -->
+                      <li class="list-group-item">
+                        Added error handling for limit overflow
+                      </li>
+                    </ul>
+                    <ul class="list-group list-group-flush mb-4">
+                      <span class="section"><h4>08/06/2022</h4></span>
+                      <li class="list-group-item">
+                        <b>[Pushshift]</b> Max post limit reduced to 100 from
+                        1000
+                      </li>
+                      <li class="list-group-item">
+                        New method for loading comments to remedy issue with
+                        parent_id returning incorrect data and missorting
+                      </li>
+                      <li class="list-group-item">
+                        Reworked styling for orphaned comments
+                      </li>
+                      <li class="list-group-item">
+                        Reduced saturation of highlight color
+                      </li>
+                    </ul>
+                    <ul class="list-group list-group-flush mb-4">
+                      <span class="section"><h4>05/03/2022</h4></span>
+                      <li class="list-group-item">
+                        <b>[Pushshift]</b> Size functionality has been added to
+                        search, supporting a range from 0 to 1000
+                      </li>
+                      <li class="list-group-item">
+                        Implemented fallback for loading comments
+                      </li>
+                      <li class="list-group-item">
+                        Added timeout handler if comment count exceeds 1000
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="offcanvas offcanvas-start m-3 rounded-2 border bg-body shadow"
+        data-bs-scroll="true"
+        tabindex="-1"
+        id="sidebar"
+        aria-labelledby="searchQuery"
+      >
+        <div class="offcanvas-header border-bottom">
+          <h3
+            class="offcanvas-title d-flex align-items-center"
+            id="searchQueryLabel"
+            style="color: var(--bs-body-color)"
+          >
+            <img src="/logo.png" width="32" class="img-fluid me-2" />Archive
+          </h3>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div id="searchform" class="p-2">
+          <form id="search_form">
+            <div class="d-flex flex-column flex-wrap justify-content-evenly">
+              <div class="form-group">
+                <label for="mode">
+                  <span class="label">Type</span>
+                  <select name="mode" id="mode" class="form-control">
+                    <option value="submissions">Submissions</option>
+                    <option value="comments">Comments</option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="subreddit">
+                  <span class="label">Subreddit</span>
+                  <input
+                    type="text"
+                    name="subreddit"
+                    id="subreddit"
+                    class="form-control"
+                  />
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="sort_type">
+                  <span class="label">Sort By</span>
+                  <select name="sort_type" id="sort_type" class="form-control">
+                    <option value="created_utc">Time</option>
+                    <option value="score">Score</option>
+                    <option value="num_comments">Comments</option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="sort">
+                  <span class="label">Order</span>
+                  <select name="sort" id="sort" class="form-control">
+                    <option value="desc" label="Desc"></option>
+                    <option value="asc" label="Asc"></option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="limit">
+                  <span class="label">Limit</span>
+                  <input
+                    type="number"
+                    min="1"
+                    max="1000"
+                    value="100"
+                    name="limit"
+                    id="limit"
+                    class="form-control"
+                  />
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="after">
+                  <span class="label">After</span>
+                  <input
+                    type="datetime-local"
+                    name="after"
+                    id="after"
+                    class="form-control"
+                  />
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="before">
+                  <span class="label">Before</span>
+                  <input
+                    type="datetime-local"
+                    name="before"
+                    id="before"
+                    class="form-control"
+                  />
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="author">
+                  <span class="label">Author</span>
+                  <input
+                    type="text"
+                    name="author"
+                    placeholder="e.g. /u/username"
+                    id="author"
+                    class="form-control"
+                  />
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="score">
+                  <span class="label">Score</span>
+                  <input
+                    type="text"
+                    name="score"
+                    placeholder="e.g. &gt;50, &lt;100"
+                    id="score"
+                    class="form-control"
+                  />
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="num_comments">
+                  <span class="label">Comments</span>
+                  <input
+                    type="text"
+                    name="num_comments"
+                    placeholder="e.g. &gt;50, &lt;100"
+                    id="num_comments"
+                    class="form-control"
+                  />
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="q">
+                  <span class="label">Title/Body</span>
+                  <input type="text" name="q" id="q" class="form-control" />
+                </label>
+              </div>
+              <div class="form-group">
+                <input
+                  type="submit"
+                  class="btn btn-primary my-1 ms-1 rounded-2"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- <div
+        id="source_link"
+        class="position-relative"
+        style="max-width: fit-content; bottom: 13px"
+      ></div> -->
+      <div id="content"></div>
+      <div id="comments_fix"></div>
+      <div id="orphans"></div>
     </div>
-  </div>
-  <div id="status"></div>
-  <div id="reddit_link"></div>
-  <div id="content"></div>
-  <div id="comments_fix"></div>
-  <div id="orphans"></div>
+    <div
+      id="status"
+      class="sticky-bottom position-fixed bottom-0 start-50 translate-middle mb-3 bg-secondary shadow rounded-2 px-3 py-2 ms-auto text-center text-white text-nowrap"
+    >
+      Please submit a query using the Search option.<br />
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -136,6 +654,7 @@
       integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
       crossorigin="anonymous"
     ></script>
+    <script src="api.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

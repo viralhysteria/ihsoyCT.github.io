@@ -80,11 +80,11 @@
                 s +
                 "<div" +
                 t("class", n([o], [!0]), !1, !0) +
-                '><p class="comment_title"' +
+                "><p class='comment_title d-flex align-items-center border-bottom pt-1 pb-2 mb-2 gap-1'" +
                 t("id", a, !0, !0) +
                 "><a" +
                 t("href", "https://reddit.com/user/" + e, !0, !0) +
-                ">" +
+                "id='author' class='fw-semibold'>" +
                 r(null == (i = e) ? "" : i) +
                 " </a><a" +
                 t(
@@ -93,17 +93,17 @@
                   !0,
                   !0
                 ) +
-                ">Submissions </a><a" +
+                "><i class='bi-person-circle'></i> </a><a" +
                 t("href", "index.html?mode=comments&author=" + e, !0, !0) +
-                ">Comments </a>- Score: " +
-                r(null == (i = l) ? "" : i) +
-                " at " +
+                "><i class='bi-chat-left-dots me-1'></i> </a><span class='badge p-1 text-body ms-auto'>" +
                 r(null == (i = c) ? "" : i) +
-                "</p><p>" +
+                "</span><span class='score badge p-1 text-body'><i class='bi bi-arrow-up me-2 text-success'></i>" +
+                (null == (i = l) ? "" : i) +
+                "<i class='bi bi-arrow-down ms-2 text-danger'></i></span></p><p>" +
                 (null == (i = u) ? "" : i) +
-                '</p><div class="children"' +
+                "</p><div class='children mt-1 bg-body-tertiary'" +
                 t("id", "t1_" + a, !0, !0) +
-                "></div></div>";
+                "></div></div></div>";
             }.call(
               this,
               "author" in u
@@ -180,12 +180,12 @@
             i = "",
             s = e || {};
           return (
-            function (e, s, u, a, o) {
+            function (e, s, u, a, o, l, c) {
               i =
                 i +
-                '<div class="post"><p class="comment_title">' +
-                n(null == (r = u) ? "" : r) +
-                '</p><p class="comment_user"><a' +
+                "<div class='post'><p class='comment_title'>" +
+                n(null == (r = o) ? "" : r) +
+                "</p><p class='comment_user'><a" +
                 t("href", "https://reddit.com/user/" + e, !0, !0) +
                 ">" +
                 n(null == (r = e) ? "" : r) +
@@ -196,15 +196,16 @@
                   !0,
                   !0
                 ) +
-                ">Submissions </a><a" +
+                "><i class='bi-person-circle'></i> </a><a" +
                 t("href", "index.html?mode=comments&author=" + e, !0, !0) +
-                ">Comments </a>- Score: " +
-                n(null == (r = a) ? "" : r) +
-                " at " +
-                n(null == (r = o) ? "" : r) +
-                "</p><p>" +
-                (null == (r = s) ? "" : r) +
-                "</p></div>";
+                "><i class='bi-chat-left-dots'></i> </a>- Score: " +
+                n(null == (r = l) ? "" : r) +
+                " ― " +
+                n(null == (r = c) ? "" : r) +
+                "</p><p>"(null == (r = s) ? "" : r) +
+                "</p><div class='post_navigation'><a" +
+                t("href", "index.html?comments=" + a + "&id=" + u, !0, !0) +
+                ">Context</a></div></div>";
             }.call(
               this,
               "author" in s
@@ -213,6 +214,12 @@
                 ? author
                 : void 0,
               "body" in s ? s.body : "undefined" != typeof body ? body : void 0,
+              "id" in s ? s.id : "undefined" != typeof id ? id : void 0,
+              "link_id" in s
+                ? s.link_id
+                : "undefined" != typeof link_id
+                ? link_id
+                : void 0,
               "permalink" in s
                 ? s.permalink
                 : "undefined" != typeof permalink
@@ -280,43 +287,53 @@
             i = "",
             s = e || {};
           return (
-            function (e, s, u, a, o, l, c, h, d) {
+            function (e, s, u, a, o, l, c, h, d, f) {
               i =
                 i +
-                '<div class="submissionclass"><div class="score">' +
-                n(null == (r = u) ? "" : r) +
-                '</div><div class="main"><div class="posted">Posted by <a' +
+                "<div class='main border bg-body shadow-sm p-2 mb-3 rounded'>" +
+                "<div class='op_title d-flex align-items-center border-bottom pb-2 mb-2 ms-1 gap-1'><a" +
                 t("href", "https://reddit.com/user/" + e, !0, !0) +
-                ">" +
+                "id='author' class='ms-2 fw-semibold'>" +
                 n(null == (r = e) ? "" : r) +
-                " </a><a" +
+                "</a><a" +
                 t(
                   "href",
                   "index.html?mode=submissions&subreddit=&author=" + e,
                   !0,
                   !0
                 ) +
-                ">Submissions </a><a" +
+                "><i class='bi-person-circle'></i> </a><a" +
                 t("href", "index.html?mode=comments&author=" + e, !0, !0) +
-                ">Comments </a>at " +
-                n(null == (r = c) ? "" : r) +
-                " \nin <a" +
-                t("href", "index.html?subreddit=" + o, !0, !0) +
-                ">" +
-                n(null == (r = o) ? "" : r) +
-                '</a></div><div class="title"><h3>' +
+                "><i class='bi-chat-left-dots'></i> </a> <span class='badge p-1 text-body ms-auto'>" +
                 n(null == (r = h) ? "" : r) +
-                "</h3></div><div><a" +
-                t("href", d, !0, !0) +
-                ">" +
+                "</span> \n" +
+                // "<a" +
+                // t("href", "index.html?subreddit=" + l, !0, !0) +
+                // ">r/" +
+                // n(null == (r = l) ? "" : r) +
+                // "</a>" +
+                "<span class='score badge p-1 text-body'><i class='bi bi-arrow-up me-2 text-success'></i>" +
+                n(null == (r = a) ? "" : r) +
+                "<i class='bi bi-arrow-down ms-2 text-danger'></i></span>" +
+                "</div>" +
+                "<div class='container-fluid'>" +
+                "<div class='post_title'><h3 style='word-break: break-word;''>" +
                 n(null == (r = d) ? "" : r) +
-                '</a></div><div class="post">' +
-                (null == (r = a) ? "" : r) +
-                '</div></div><div class="thumbnail"><img' +
-                t("src", l, !0, !0) +
-                "></div></div><div" +
+                "</h3></div><div class='post_link text-break'><a" +
+                t("href", f, !0, !0) +
+                ">" +
+                n(null == (r = f) ? "" : r) +
+                "</a></div><div class='comment_link'><a" +
+                t("href", "index.html?comments=" + s, !0, !0) +
+                ">" +
+                n(null == (r = u) ? "" : r) +
+                " Comments</a></div><div class='thumbnail p-0 mt-3 border rounded-2 text-center'><img" +
+                t("src", c, !0, !0) +
+                "'></div><div" +
                 t("id", "t3_" + s, !0, !0) +
-                "></div>";
+                "><div class='post py-3 my-3 border rounded-2 fs-6'>" +
+                (null == (r = o) ? "<span></span>" : r) +
+                "</div></div></div>";
             }.call(
               this,
               "author" in s
@@ -325,6 +342,11 @@
                 ? author
                 : void 0,
               "id" in s ? s.id : "undefined" != typeof id ? id : void 0,
+              "num_comments" in s
+                ? s.num_comments
+                : "undefined" != typeof num_comments
+                ? num_comments
+                : void 0,
               "score" in s
                 ? s.score
                 : "undefined" != typeof score
@@ -7231,7 +7253,7 @@
             commentSearch:
               "https://api.pullpush.io/reddit/search/comment/?test",
             commentsBackup:
-              "https://api.pushshift.io/reddit/comment/search?filter=id,author,parent_id,score,body,created_utc,link_id,permalink&sort=created_utc&order=asc&limit=1000&q=*&link_id=",
+              "https://api.pullpush.io/reddit/comment/search?sort=asc&limit=1000&link_id=",
           },
           template: {
             submissionCompiled: n(598),
@@ -7240,12 +7262,7 @@
           },
           $el: (() => {
             const e = document.createElement("div");
-            return (
-              (e.id = "submission"),
-              (e.innerHTML =
-                "Loading Submission/Comments or you haven't done a search yet."),
-              e
-            );
+            return (e.id = "submission"), e;
           })(),
           requestCount: 0,
           changeStatus(e) {
@@ -7265,48 +7282,56 @@
                   (e = Math.floor(new Date(e).getTime() / 1e3)),
                   "" !== e && "mode" !== n && t.push(n + "=" + e);
               }),
-              console.log("AAAA", t),
               t.join("&")
             );
           },
           grabSubmissions(n) {
             const r = i.createRequest(n);
-            i.changeStatus("Loading Submissions"),
-              e
-                .get(i.link.submission + "&" + r)
-                .then((e) => {
-                  (i.$el.innerHTML = ""),
-                    e.data.data
-                      .forEach((e) => {
-                        (e.time = t.unix(e.created_utc).format("llll")),
-                          ["jpg", "png", "gif"].includes(
-                            e.url.split(".").pop()
-                          ) && (e.thumbnail = e.url),
-                          (i.$el.innerHTML += i.template.submissionCompiled(e)),
-                          (i.last = e);
-                      })
-                      .then(() => {
-                        i.changeStatus("Submissions Loaded");
-                      });
-                })
-                .catch((e) => {
-                  console.log(e), i.changeStatus("Error Loading Submissions");
+            i.changeStatus(
+              "<span class='d-flex align-items-center'>Loading Submissions…<div class='spinner-border ms-2' style='width:1rem; height:1rem;' role='loading'></div></span>"
+            );
+
+            e.get(i.link.submission + "&" + r)
+              .then((e) => {
+                i.$el.innerHTML = "";
+
+                const promiseArray = e.data.data.map((e) => {
+                  e.time = t.unix(e.created_utc).format("llll");
+                  if (["jpg", "png", "gif"].includes(e.url.split(".").pop())) {
+                    e.thumbnail = e.url;
+                  }
+
+                  i.$el.innerHTML += i.template.submissionCompiled(e);
+                  i.last = e;
+
+                  return Promise.resolve(); // Resolve each iteration promise immediately
                 });
+
+                return Promise.all(promiseArray); // Wait for all promises to resolve
+              })
+              .then(() => {
+                i.changeStatus(
+                  "<span>Submissions Loaded<i class='bi bi-check-circle ms-2'></i></span>"
+                );
+              })
+
+              .catch((e) => {
+                console.log(e), i.changeStatus("<span>" + e + "</span>");
+              });
           },
           grabComments(n, s) {
-            i.changeStatus("Loading Comments"),
-              console.log(n),
-              console.log("backup"),
-              i.changeStatus("Loading Comments (Backup)"),
-              i.set_reddit_link(n),
+            i.changeStatus(
+              "<span class='d-flex align-items-center'>Loading Comments…<div class='spinner-border text-body ms-2' style='width:1rem; height:1rem;' role='loading'></div></span>"
+            ),
+              i.changeStatus("<span>Loading Comments (Backup)</span>"),
+              // i.set_source_link(n),
               (i.$el.innerHTML = ""),
               e
                 .get(i.link.submission + "&ids=" + n)
                 .then((e) => {
-                  console.log(e),
-                    (e.data.data[0].time = t
-                      .unix(e.data.data[0].created_utc)
-                      .format("llll")),
+                  (e.data.data[0].time = t
+                    .unix(e.data.data[0].created_utc)
+                    .format("llll")),
                     (e.data.data[0].selftext = r.parse(
                       e.data.data[0].selftext
                     )),
@@ -7315,10 +7340,14 @@
                     ));
                 })
                 .then(() => {
-                  i.changeStatus("Submission Loaded");
+                  i.changeStatus(
+                    "<span>Submission Loaded<i class='bi bi-check-circle ms-2'></i></span>"
+                  );
                 }),
               i.loadCommentsBackup(n, s).then(() => {
-                i.changeStatus("Comments Loaded");
+                i.changeStatus(
+                  "<span>Comments Loaded<i class='bi bi-check-circle ms-2'></i></span>"
+                );
               });
           },
           sleep: (e) => (
@@ -7341,20 +7370,25 @@
               .catch(i.error);
           },
           async loadCommentsBackup(n, s, u = null) {
-            i.changeStatus("Loading Comments (Backup)");
-            let a = i.link.commentsBackup + parseInt(n, 36);
-            null !== u && (a += "&since=" + (u + 1)),
-              i.requestCount > 10 && ((i.requestCount = 0), await i.sleep(1e4)),
+            i.changeStatus(
+              "<span>Loading Comments (Backup)<i class='bi bi-floppy2 ms-2'></i></span>"
+            );
+            let a = i.link.commentsBackup + n;
+            null !== u && (a += "&after=" + (u + 1)),
+              i.requestCount > 10 &&
+                ((i.requestCount = 0),
+                console.log("Waiting"),
+                await i.sleep(1e4)),
               e
                 .get(a)
                 .then((e) => {
-                  i.requestCount++, console.log(e.data.data);
-                  let u = null;
+                  // i.requestCount++, console.log(e.data.data);
+                  let a = null;
                   e.data.data.forEach((e) => {
                     switch (
                       ((e.time = t.unix(e.created_utc).format("llll")),
                       e.id === s
-                        ? (e.postClass = "post_highlight")
+                        ? (e.postClass = "post_highlight fs-4")
                         : (e.postClass = "post"),
                       (e.body = r.parse(e.body)),
                       typeof e.parent_id)
@@ -7364,50 +7398,65 @@
                         break;
                       case "number":
                         e.parent_id =
-                          "t1_" + ((a = e.parent_id), parseInt(a).toString(36));
+                          "t1_" + ((u = e.parent_id), parseInt(u).toString(36));
                     }
-                    var a;
+                    var u;
                     document.getElementById(e.parent_id)
                       ? (document.getElementById(e.parent_id).innerHTML +=
                           i.template.postCompiled(e))
                       : null == e.parent_id
                       ? (document.getElementById("comments_fix").innerHTML +=
                           i.template.postCompiled(e))
-                      : ((e.postClass = "orphan"),
+                      : ((e.postClass = "orphan p-3 border bg-body"),
                         (document.getElementById("orphans").innerHTML +=
                           i.template.postCompiled(e))),
-                      (u = e);
+                      (a = e);
                   }),
-                    console.log("LAST", u),
-                    null !== u
-                      ? i.loadCommentsBackup(n, s, u.created_utc)
-                      : i.changeStatus("Comments Loaded"),
+                    // console.log("LAST", a),
+                    null !== a && a.created_utc != u
+                      ? i.loadCommentsBackup(n, s, a.created_utc)
+                      : i.changeStatus(
+                          "<span>Comments Loaded<i class='bi bi-check-circle ms-2'></i></span>"
+                        ),
                     null !== s && document.getElementById(s).scrollIntoView();
                 })
                 .catch(() => {
                   i.changeStatus(
-                    "Error, most likely too many requests. Try again later"
+                    "<span>Error<br/>Most likely too many requests. Try again later</span>"
                   );
                 });
           },
-          set_reddit_link(e) {
-            document.getElementById("reddit_link").innerHTML =
-              null != e
-                ? "<a href='https://reddit.com/" +
-                  e +
-                  "'>Submission on reddit</a>"
-                : "";
+          set_source_link() {
+            if (/\?comments=[\w\d]{6,7}$/g.test(window.location.href)) {
+              const postCode = window.location.href.split("=").pop();
+              console.log(postCode);
+              const g = document.querySelector("#submission");
+              const p = document.createElement("div");
+              p.setAttribute("id", "source_link");
+              p.classList.add("text-center", "mt-2");
+              p.style.zIndex = "100";
+              g.insertAdjacentElement("afterend", p);
+              document.getElementById("source_link").innerHTML =
+                null != postCode
+                  ? "<a href='https://reddit.com/" +
+                    postCode +
+                    "' class='btn btn-primary text-light' style='font-size: 12px'>Original Post</a>"
+                  : "";
+            }
           },
         };
+
+      // search query properties
       function s(e) {
         e.forEach((e, t) => {
-          console.log(t + " => " + e), (document.getElementById(t).value = e);
+          // console.log(t + " => " + e)
+          document.getElementById(t).value = e;
         });
       }
+
       window.onload = () => {
         const e = window.location.search,
           t = new URLSearchParams(e);
-        console.log(t);
         const n = t.get("mode");
         t.has("limit") || t.set("limit", 100),
           "comments" === n
@@ -7417,6 +7466,7 @@
             : t.has("subreddit") &&
               (s(t), t.delete("mode"), i.grabSubmissions(t)),
           document.getElementById("content").appendChild(i.$el);
+        setTimeout(() => i.set_source_link(), "1000");
       };
     })();
 })();
