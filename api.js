@@ -307,11 +307,6 @@
                 "><i class='bi-chat-left-dots'></i> </a> <span class='badge p-1 text-body ms-auto'>" +
                 n(null == (r = h) ? "" : r) +
                 "</span> \n" +
-                // "<a" +
-                // t("href", "index.html?subreddit=" + l, !0, !0) +
-                // ">r/" +
-                // n(null == (r = l) ? "" : r) +
-                // "</a>" +
                 "<span class='score badge p-1 text-body'><i class='bi bi-arrow-up me-2 text-success'></i>" +
                 n(null == (r = a) ? "" : r) +
                 "<i class='bi bi-arrow-down ms-2 text-danger'></i></span>" +
@@ -7304,10 +7299,10 @@
                   i.$el.innerHTML += i.template.submissionCompiled(e);
                   i.last = e;
 
-                  return Promise.resolve(); // Resolve each iteration promise immediately
+                  return Promise.resolve();
                 });
 
-                return Promise.all(promiseArray); // Wait for all promises to resolve
+                return Promise.all(promiseArray);
               })
               .then(() => {
                 i.changeStatus(
@@ -7324,7 +7319,6 @@
               "<span class='d-flex align-items-center'>Loading Comments…<div class='spinner-border text-body ms-2' style='width:1rem; height:1rem;' role='loading'></div></span>"
             ),
               i.changeStatus("<span>Loading Comments (Backup)</span>"),
-              // i.set_source_link(n),
               (i.$el.innerHTML = ""),
               e
                 .get(i.link.submission + "&ids=" + n)
@@ -7382,7 +7376,6 @@
               e
                 .get(a)
                 .then((e) => {
-                  // i.requestCount++, console.log(e.data.data);
                   let a = null;
                   e.data.data.forEach((e) => {
                     switch (
@@ -7412,7 +7405,6 @@
                           i.template.postCompiled(e))),
                       (a = e);
                   }),
-                    // console.log("LAST", a),
                     null !== a && a.created_utc != u
                       ? i.loadCommentsBackup(n, s, a.created_utc)
                       : i.changeStatus(
@@ -7433,23 +7425,21 @@
               const g = document.querySelector("#submission");
               const p = document.createElement("div");
               p.setAttribute("id", "source_link");
-              p.classList.add("text-center", "mt-2");
+              p.classList.add("text-end", "mb-3");
               p.style.zIndex = "100";
               g.insertAdjacentElement("afterend", p);
               document.getElementById("source_link").innerHTML =
                 null != postCode
                   ? "<a href='https://reddit.com/" +
                     postCode +
-                    "' class='btn btn-primary text-light' style='font-size: 12px'>Original Post</a>"
+                    "' class='btn btn-sm btn-link text-light' style='font-size: 12px'>Original Post</a>"
                   : "";
             }
           },
         };
 
-      // search query properties
       function s(e) {
         e.forEach((e, t) => {
-          // console.log(t + " => " + e)
           document.getElementById(t).value = e;
         });
       }
